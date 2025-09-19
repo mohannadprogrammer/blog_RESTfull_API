@@ -1,0 +1,18 @@
+{
+  "name": "nodejs-mysql-api",
+  "version": "1.0.0",
+  "description": "Arest Api with NodeJs and my Sql (I treaning my self and reffertion my knowlage)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mohannad Waheed",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.3"
+  }
+}
