@@ -9,10 +9,13 @@
   "author": "Mohannad Waheed",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
     "fastest-validator": "^1.19.1",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.15.0",
+    "nodemon": "^3.1.10",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
