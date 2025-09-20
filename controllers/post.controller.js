@@ -1,9 +1,10 @@
 const models =require('../models');
+const Validator =require('fastest-validator');
 const { get } = require('../routes/posts');
 
 
 function save (req , res){
-   console.log("post ======== >",req);
+   
    // get data from request body
     const post ={
         title : req.body.title,
@@ -12,7 +13,22 @@ function save (req , res){
         catogryId : 1,
         userId : 1
     }
-    console.log("post ======== >",post);
+    const schema={
+        title:{type:"string",min:3,max:255 ,optional:false},
+        content:{type:"string",min:3,max:5000,optional:false},
+        imageUrl:{type:"string",optional:true,empty:true},
+    }
+    
+    const v = new Validator();
+    const validationResponse = v.validate(post,schema);
+
+    if (validationResponse !== true){
+        return res.status(400).json({
+            message : "validation failed",
+            errors : validationResponse
+        })
+    }   
+
 
     //deling with Database using ORM (sequelize)
     models.Post.create(post).then(result=>{
@@ -33,7 +49,14 @@ function show (request , response){
 
     console.log("id $$$$$$$$$$$$",id)
     models.Post.findByPk(id).then(result => {
-        console.log(result)
+        if (result){
+            response.status(200).json(result)
+            
+        }else{
+            response.status(404).json({
+                message : "post not found"
+            })
+        }
         response.status(200).json(result)   
     }).catch( err=>{
         response.status(500).json({
@@ -58,7 +81,29 @@ function index (req , res){
 function update (req , res){
     const id = req.params.id
 
-    models.Post.update(req.body,{ where : {id:id } }).then(result=>{
+    const post ={
+        title : req.body.title,
+        content : req.body.content,
+        imageUrl : req.body.imageUrl,
+    }
+
+    const schema={
+        title:{type:"string",min:3,max:255 ,optional:false},
+        content:{type:"string",min:3,max:5000,optional:false},
+        imageUrl:{type:"string",optional:true,empty:true},
+    }
+    
+    const v = new Validator();
+    const validationResponse = v.validate(post,schema);
+
+    if (validationResponse !== true){
+        return res.status(400).json({
+            message : "validation failed",
+            errors : validationResponse
+        })
+    }
+
+    models.Post.update(post,{ where : {id:id } }).then(result=>{
         res.status(200).json({
             message : "post updated successfully",
             post : result
@@ -75,6 +120,13 @@ function destroy (req , res){
     const id = req.params.id
     
     models.Post.destroy({ where : {id:id } }).then(result=>{
+        
+        if(result == 0){
+            return res.status(404).json({
+                message : "post not found"
+            })
+        }
+
         res.status(200).json({
             message : "post deleted successfully",
             post : result
