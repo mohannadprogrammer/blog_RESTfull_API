@@ -3,13 +3,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 function signUp (req , res){
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     const user ={
         name : req.body.name,
         email : req.body.email,
-        password : req.body.password
+        password : hashedPassword
     }
 
-    models.User.create(user).then(result=>{
+    models.user.create(user).then(result=>{
         res.status(201).json({
             message : "user created successfully",
             user : result
@@ -26,13 +27,13 @@ function login (req , res){
     const email = req.body.email;
     const password = req.body.password;
 
-    models.User.findOne({ where : {email:email} }).then(user=>{
+    models.user.findOne({ where : {email:email} }).then(user=>{
         if(!user){
             return res.status(404).json({
                 message : "user not found"
             })
         }
-
+        
         const isPasswordValid = bcrypt.compareSync(password , user.password);
         if(!isPasswordValid){
             return res.status(401).json({
