@@ -2,4 +2,11 @@
 
 # curl -X PUT http://localhost:3000/posts/2   -H "Content-Type: application/json" -d ' { "title":"Updated Title " , "content":"Updated Body" , "imageUrl":"" , "catogryId" : 1 }'
 # curl -X POST http://localhost:3000/user/signup  -H "Content-Type: application/json" -d ' {"email":"m00@g.com" , "password":"123" , "name" : "waheed mohannad" }'
-curl -X POST http://localhost:3000/user/login  -H "Content-Type: application/json" -d ' {"email":"m00@g.com" , "password":"123"  }'
+# curl -X POST http://localhost:3000/user/login  -H "Content-Type: application/json" -d ' {"email":"m00@g.com" , "password":"123"  }'
+# posting comment 
+
+# curl -X POST http://localhost:3000/comment  -H "Content-Type: application/json" -d \
+# ' {"content":"Test ls;df;ls" , "postId":3 , "userId" : 1}'
+
+#geting all comments 
+curl -X GET http://localhost:3000/comment -H "Content-Type: application/json" 
