@@ -1,6 +1,5 @@
 const models =require('../models');
 const Validator =require('fastest-validator');
-const { get } = require('../routes/posts');
 
 
 function save (req , res){
