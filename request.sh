@@ -9,4 +9,15 @@
 # ' {"content":"Test ls;df;ls" , "postId":3 , "userId" : 1}'
 
 #geting all comments 
-curl -X GET http://localhost:3000/comment -H "Content-Type: application/json" 
+# curl -X GET http://localhost:3000/comment -H "Content-Type: application/json" 
+
+# test catogry creation 
+# curl -X POST http://localhost:3000/catogry  -H "Content-Type: application/json" -d \
+# ' {"name":"javascript" }'
+#test catogry listing \
+# curl -X GET http://localhost:3000/catogry  -H "Content-Type: application/json"
+#update catogry 
+# curl -X PUT http://localhost:3000/catogry/2  -H "Content-Type: application/json" -d \
+# ' {"name":"React js " }'
+#delete catogry
+curl -X DELETE http://localhost:3000/catogry/4  -H "Content-Type: application/json"
