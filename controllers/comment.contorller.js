@@ -62,6 +62,7 @@ function show (req, res){
 
 function update (req , res){
     const id = req.params.id;
+    console.log("id $$$$$$$$$$$$",id)
     const updatedComment ={
         content : req.body.content,
         postId : req.body.postId,
@@ -81,7 +82,15 @@ function update (req , res){
             })
     }
 
-    models.Comment.update(comment , {where :{id:id}}).then(comment=>{
+
+    models.Comment.update(updatedComment , {where :{ id:id} }).then(comment=>{
+        if(comment == 0){
+            return res.status(404).json({
+                status:404,
+                message : "comment not found"
+            })
+        }
+
         res.status(200).json({
             message : "comment updated successfully",
             comment : comment
@@ -110,6 +119,13 @@ function destroy (req , res){
     const id = req.params.id;
 
     models.Comment.destroy({ where : {id:id} }).then(result=>{
+        if (result === 0) {
+            
+            return res.status(404).json({
+                status:404,
+                message: "comment not found"
+            })
+        }
         res.status(200).json({
             message : "comment deleted successfully",
             comment : result

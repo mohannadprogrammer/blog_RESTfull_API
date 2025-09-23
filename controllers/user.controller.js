@@ -11,6 +11,7 @@ function signUp (req , res){
     }
 
     models.user.create(user).then(result=>{
+
         res.status(201).json({
             message : "user created successfully",
             user : result
@@ -30,7 +31,8 @@ function login (req , res){
     models.user.findOne({ where : {email:email} }).then(user=>{
         if(!user){
             return res.status(404).json({
-                message : "user not found"
+                status: 404,
+                message : "user email or password is incorrect"
             })
         }
         

@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/signup',userController.signUp)
 
 // login route
-router.post('/login',userController.login)
+router.get('/login',userController.login)
 
 module.exports =router
 
