@@ -9,8 +9,8 @@ function save (req , res){
         title : req.body.title,
         content : req.body.content,
         imageUrl : req.body.imageUrl,
-        catogryId : 1,
-        userId : 1
+        catogryId : req.body.catogryId,
+        userId : req.userId
     }
     const schema={
         title:{type:"string",min:3,max:255 ,optional:false},
@@ -103,6 +103,12 @@ function update (req , res){
     }
 
     models.Post.update(post,{ where : {id:id } }).then(result=>{
+        if(result == 0){
+            return res.status(404).json({
+                status: 404,
+                message : "post not found"
+            })
+        }
         res.status(200).json({
             message : "post updated successfully",
             post : result
@@ -122,6 +128,7 @@ function destroy (req , res){
         
         if(result == 0){
             return res.status(404).json({
+                status: 404,
                 message : "post not found"
             })
         }
